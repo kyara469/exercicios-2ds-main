@@ -1,13 +1,10 @@
-
 const fs = require("fs/promises")
 
-function caminhoArquivo() {
-    return process.env.ARQUIVO_ENTREGAS || "entregas.json"
-}
+const ARQUIVO =  process.env.ARQUIVO_ENTREGAS || "entregas.json"
 
 async function listar() {
     try {
-        const conteudo = await fs.readFile(caminhoArquivo(), "utf-8")
+        const conteudo = await fs.readFile(ARQUIVO, "utf-8")
         return JSON.parse(conteudo)
     } catch (erro) {
         if (erro.code === "ENOENT") {
@@ -24,9 +21,9 @@ async function salvar(entrega) {
     entregas.push(entrega)
 
     await fs.writeFile(
-        caminhoArquivo(),
+        ARQUIVO,
         JSON.stringify(entregas, null, 2)
-    );
+    )
 
     return entrega
 }
@@ -43,12 +40,12 @@ async function atualizar(id, dados) {
     entregas[indice] = {
         ...entregas[indice],
         ...dados
-    };
+    }
 
     await fs.writeFile(
-        caminhoArquivo(),
+        ARQUIVO,
         JSON.stringify(entregas, null, 2)
-    );
+    )
 
     return entregas[indice]
 }
@@ -65,9 +62,9 @@ async function remover(id) {
     entregas.splice(indice, 1)
 
     await fs.writeFile(
-        caminhoArquivo(),
+        ARQUIVO,
         JSON.stringify(entregas, null, 2)
-    );
+    )
 
     return true
 }
