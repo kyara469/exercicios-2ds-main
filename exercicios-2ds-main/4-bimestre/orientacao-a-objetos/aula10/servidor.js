@@ -1,5 +1,5 @@
 
-const app = require("./index")
+const app = require("../servidor")
 
 const porta = Number(process.env.PORT) || 3000
 
